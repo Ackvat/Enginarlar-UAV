@@ -1,9 +1,13 @@
 import os
 import time
 
-import lib.ackmetton as ack
+from dotenv import load_dotenv
 
 from adafruit_servokit import ServoKit
+
+import lib.ackmetton as ack
+
+load_dotenv()
 
 kit = ServoKit(channels=16)
 kit.address = 0x40

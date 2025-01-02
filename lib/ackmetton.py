@@ -1,5 +1,14 @@
+import os
+
 from datetime import datetime
 from colorama import Fore, Style
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+Debug = os.environ.get("DEBUG", 0)
+Verbose = os.environ.get("VERBOSE", 0)
 
 def GetColor(color="WHITE"):
     try:
@@ -20,13 +29,13 @@ def Debug(text="DEBUG", color="WHITE", padding=False):
     if padding: pad = "\n"
     else: pad = ""
 
-    print(Style.BRIGHT + f'{"["}{Fore.GREEN + "DEBUG"}{Fore.RESET + "] "}' + Style.BRIGHT + f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}' + Style.RESET_ALL + ' | ' + GetColor(color=color) + text + pad + Style.RESET_ALL)
+    if Debug > 0: print(Style.BRIGHT + f'{"["}{Fore.GREEN + "DEBUG"}{Fore.RESET + "] "}' + Style.BRIGHT + f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}' + Style.RESET_ALL + ' | ' + GetColor(color=color) + text + pad + Style.RESET_ALL)
 
 def Verbose(text="VERBOSE", color="WHITE", padding=False):
     if padding: pad = "\n"
     else: pad = ""
 
-    print(Style.BRIGHT + f'{"["}{Fore.BLUE + "VERBOSE"}{Fore.RESET + "] "}' + Style.BRIGHT + f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}' + Style.RESET_ALL + ' | ' + GetColor(color=color) + text + pad + Style.RESET_ALL)
+    if Verbose > 0: print(Style.BRIGHT + f'{"["}{Fore.BLUE + "VERBOSE"}{Fore.RESET + "] "}' + Style.BRIGHT + f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}' + Style.RESET_ALL + ' | ' + GetColor(color=color) + text + pad + Style.RESET_ALL)
 
 def Warn(text="WARN", color="YELLOW", padding=False):
     if padding: pad = "\n"
