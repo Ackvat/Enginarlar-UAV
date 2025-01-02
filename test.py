@@ -15,11 +15,12 @@ kit.frequency = 333
 
 kit.servo[0].actuation_range = 190
 kit.servo[0].set_pulse_width_range(500, 2600)
+print(os.environ.get("DEBUG", "FALSE"))
+Test = os.environ.get("TEST", "FALSE")
 
-Trial = True
-
-if Trial == False:
+if Test == "FALSE":
     try:
+        ack.Debug("Döngü testi yapılıyor.")
         while True:
             kit.servo[0].angle = 0
             time.sleep(3)
@@ -28,4 +29,5 @@ if Trial == False:
     except KeyboardInterrupt:
         pass
 else:
+    ack.Debug("Tek açı testi yapılıyor.")
     kit.servo[0].angle = 190
