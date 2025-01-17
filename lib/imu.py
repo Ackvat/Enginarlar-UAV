@@ -8,6 +8,8 @@ devName = "BNO055"
 ack = acklib.Ackmetton(name=devName, color="GREEN")
 load_dotenv()
 
+# Yeni sensör değeri eklendiğinde, GetError kısmına eklemelerini yapmayı unutma!!!
+
 class Sensor:
     def __init__(self, uav=None, i2c=None):
         ack.Debug(f'Sensör hazırlanıyor...', color="CYAN")
@@ -18,6 +20,7 @@ class Sensor:
 
             self.count = True
 
+            self.i2c = i2c
             self.sensor = adafruit_bno055.BNO055_I2C(i2c)
             self.lastTemperature = 0
             self.tempSuccessCount = 0
@@ -35,6 +38,8 @@ class Sensor:
             self.eulerErrorRatio = 1
         except Exception as error:
             ack.Error(f'Sensör hazırlanırken bir hata oluştu.\n\t{error}')
+
+        ack.Debug(f'Sensör başarıyla aşağıdaki parametrelerle hazırlandı:\n\tI2C arayüzü = {self.i2c}', color="GREEN")
 
     def GetGravity(self):
         ack.Debug(f'Yer çekimi değeri okunuyor...')
@@ -89,3 +94,14 @@ class Sensor:
             return result
     
     def GetError(self):
+        if self.tempErrorCount > 0:
+            self.tempErrorRatio = self.tempSuccessCount/self.tempErrorCount
+            ack.Verbose(f'Sıcaklık sensör okuma başarı oranı: {self.tempErrorRatio:.2f}', color="GREEN" if self.tempErrorRatio >= 1 else "RED")
+
+        if self.gravityErrorCount > 0:
+            self.gravityErrorRatio = self.gravitySuccessCount/self.gravityErrorCount
+            ack.Verbose(f'Yer çekimi sensör okuma başarı oranı: {self.gravityErrorRatio:.2f}', color="GREEN" if self.gravityErrorRatio >= 1 else "RED")
+
+        if self.eulerErrorCount > 0:
+            self.eulerErrorRatio = self.eulerSuccessCount/self.eulerErrorCount
+            ack.Verbose(f'Euler açı sensör okuma başarı oranı: {self.eulerErrorRatio:.2f}', color="GREEN" if self.eulerErrorRatio >= 1 else "RED")

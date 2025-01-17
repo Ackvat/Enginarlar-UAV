@@ -32,7 +32,7 @@ testType = 1
 
 ack.Debug(f'ENGİNARLAR İHA ana programı başlatılıyor...', color="CYAN")
 
-uav = uavlib.UAV()
+uav = uavlib.UAV(freq=5)
 
 
 
@@ -44,7 +44,7 @@ if os.environ.get("TEST", "FALSE") == "FALSE":
 	try:
 		while True:
 			ack.Debug(f'Sistem döngüsü gerçekleştiriliyor...')
-			time.sleep(1)
+			time.sleep(uav.systemPeriod)
 	except KeyboardInterrupt:
 		pass
 else:
@@ -58,12 +58,9 @@ else:
 				uav.imu.GetGravity()
 				uav.imu.GetEuler()
 				uav.imu.GetTemperature()
-				if uav.imu.tempErrorCount > 0:
-					tempErrorRatio = uav.imu.tempSuccessCount/uav.imu.tempErrorCount
-					tempErrorRatioColor = "GREEN"
-					if tempErrorRatio < 1: tempErrorRatioColor = "RED"
-					ack.Debug(f'Sıcaklık hata ve başarı oranı: {tempErrorRatio:.2f}', color=tempErrorRatioColor)
-				time.sleep(0.25)
+
+				uav.imu.GetError()
+				time.sleep(uav.systemPeriod)
 		except KeyboardInterrupt:
 			pass
 

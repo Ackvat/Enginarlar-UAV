@@ -5,14 +5,14 @@ import board
 import lib.ackmetton as acklib
 
 import lib.imu as imulib
-import lib.nacelle as nacellelib
+import lib.motor as motorlib
 
 devName = "UAV"
 ack = acklib.Ackmetton(name=devName, color="WHITE")
 load_dotenv()
 
 class UAV:
-    def __init__(self, adress=0x40, channels=16, freq=333, actuationRange=190, pwRange=[500, 2600]):
+    def __init__(self, freq=1):
         ack.Debug(f'İHA hazırlanıyor...', color="CYAN")
 
         try:
@@ -20,8 +20,12 @@ class UAV:
 
             self.i2c = board.I2C()
 
-            self.nacelles = nacellelib.Nacelles(uav=self)
+            self.motors = motorlib.Motors(uav=self)
             self.imu = imulib.Sensor(uav=self, i2c=self.i2c)
+
+            self.systemFrequency = freq
+            self.systemPeriod = 1/freq
         except Exception as error:
             ack.Error(f'İHA hazırlanırken bir hata oluştu.\n\t{error}')
         
+        ack.Debug(f'İHA başarıyla aşağıdaki parametrelerle hazırlandı:\n\tSistem frekansı = {freq}\n\tMotor sürücüsü = {self.motors}\n\tAtalet sensörü = {self.imu}', color="GREEN")

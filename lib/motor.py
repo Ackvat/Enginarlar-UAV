@@ -8,7 +8,7 @@ devName = "PCA9685"
 ack = acklib.Ackmetton(name=devName, color="RED")
 load_dotenv()
 
-class Nacelles:
+class Motors:
     def __init__(self, uav=None, adress=0x40, channels=16, freq=333, actuationRange=190, pwRange=[500, 2600]):
         ack.Debug(f'Sürücü hazırlanıyor...', color="CYAN")
 
@@ -24,10 +24,10 @@ class Nacelles:
             self.driver.servo[0].set_pulse_width_range(500, 2600)
         except Exception as error:
             ack.Error(f'Sürücü hazırlanırken bir hata oluştu.\n\t{error}')
-
-        ack.Debug(f'Sürücü başarıyla aşağıdaki parametlerle hazırlandı:\n\tKanal Sayısı = {channels}\n\tFrekans = {freq} Hz\n\tAzami Açı = {actuationRange} derece\n\tPW Aralığı = [{pwRange[0]}, {pwRange[1]}] us', color="GREEN")
+        
+        ack.Debug(f'Sürücü başarıyla aşağıdaki parametrelerle hazırlandı:\n\tKanal Sayısı = {channels}\n\tFrekans = {freq} Hz\n\tAzami Açı = {actuationRange} derece\n\tPW Aralığı = [{pwRange[0]}, {pwRange[1]}] us', color="GREEN")
     
     def SetNacelle(self, nacelle=0, angle=95):
-
+        ack.Verbose(f'{nacelle}. Servo -> {angle} derece.')
         self.driver.servo[nacelle].angle = angle
         
