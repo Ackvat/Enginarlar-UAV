@@ -9,7 +9,7 @@ import lib.responseService as responseService
 from lib.UAV import UAV
 
 ########################################
-#                ANAYORDAM             #
+#              ANAYORDAM               #
 ########################################
 
 if __name__ == "__main__":
@@ -20,5 +20,5 @@ if __name__ == "__main__":
 		while True:
 			uav.mainCycle()
 	except KeyboardInterrupt:
-		uav.bodyIMU.suspendSensor()
+		uav.bodyIMU.SuspendSensor()
 		uav.i2c.close()

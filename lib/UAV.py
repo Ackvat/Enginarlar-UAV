@@ -27,18 +27,22 @@ class UAV:
         
         self.responseLevel = 5
         self.systemFrequency = 60
-        
+
+        self.i2c = SMBus(1)
+
         self.interface = INTERFACE(uav=self)
 
         self.interface.Response(self.response["PREPARING"], self.devName)
 
-        self.i2c = SMBus(1)
         self.bodyIMU = BNO055(devName="GÖVDE AÖS", uav=self)
         
         self.interface.Response(self.response["PREPARED"], self.devName)
         
     
     def mainCycle(self):
-        self.bodyIMU.getAcceleration()
+        self.bodyIMU.GetCalibrationStatus()
+        self.bodyIMU.GetAcceleration()
+        self.bodyIMU.GetGravity()
+        self.bodyIMU.GetQuaternionOrientation()
 
         time.sleep(1/self.systemFrequency)
