@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 
 import adafruit_bno055
 
-import lib.ackmetton as acklib
+import lib.printService as acklib
 
 devName = "BNO055"
 ack = acklib.Ackmetton(name=devName, color="GREEN")

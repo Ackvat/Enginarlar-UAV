@@ -1,8 +1,6 @@
-from dotenv import load_dotenv
-
 import board
 
-import lib.ackmetton as acklib
+import lib.printService as acklib
 
 import lib.imu as imulib
 import lib.motor as motorlib
