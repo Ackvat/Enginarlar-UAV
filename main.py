@@ -1,28 +1,24 @@
+#!/venv/bin/python3
 
 ########################################
 #            BAĞLANTILAR               #
 ########################################
 
-import lib.printService as printService
+import lib.responseService as responseService
 
-devName = "MAIN"
-
-testType = 1
-
-########################################
-#             BAŞLANGIÇ                #
-########################################
-
-printService.Debug(f'ENGİNARLAR İHA ana sistem yordamı başlatılıyor...', color="CYAN")
-# Sistem ana unsurlarını burada başlatıyoruz.
+from lib.UAV import UAV
 
 ########################################
 #                ANAYORDAM             #
 ########################################
 
 if __name__ == "__main__":
+	uav = UAV()
+	uav.responseLevel = 6
+
 	try:
 		while True:
-			pass
+			uav.mainCycle()
 	except KeyboardInterrupt:
-		printService.Warn(f'ENGİNARLAR İHA ana sistem yordamı durduruluyor...')
+		uav.bodyIMU.suspendSensor()
+		uav.i2c.close()
