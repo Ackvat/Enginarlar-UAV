@@ -4,6 +4,7 @@
 #            BAĞLANTILAR               #
 ########################################
 
+import os
 import time
 from smbus2 import SMBus
 
@@ -23,6 +24,8 @@ class UAV:
         self.response = {
             "PREPARING": {"text": "İHA hazırlanıyor...", "reason": responseService.reasons["DEBUG"]},
             "PREPARED": {"text": "İHA hazırlandı.", "reason": responseService.reasons["DEBUG"]},
+
+            "INIT_ERROR": {"text": "İHA başlatılamadı.", "reason": responseService.reasons["ERROR"]},
         }
         
         self.responseLevel = 5
@@ -40,9 +43,9 @@ class UAV:
         
     
     def mainCycle(self):
-        self.bodyIMU.GetCalibrationStatus()
-        self.bodyIMU.GetAcceleration()
-        self.bodyIMU.GetGravity()
-        self.bodyIMU.GetQuaternionOrientation()
+        self.bodyIMU.ReadAll()
+
+        print(self.bodyIMU.eulerOrientation)
+        print(self.bodyIMU.quaternionOrientation.GetEulerAngles())
 
         time.sleep(1/self.systemFrequency)

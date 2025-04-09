@@ -116,38 +116,6 @@ class Quaternion:
     def AbsoluteMedian(self):
         return abs(self.Median())
     
-    def Normalized(self):
-        if self.Magnitude() == 0:
-            return Quaternion(0, 0, 0, 0)
-        
-        normalizedQuaternion = Quaternion(self.w, self.x, self.y, self.z)
-        normalizedQuaternion.w /= self.Magnitude()
-        normalizedQuaternion.x /= self.Magnitude()
-        normalizedQuaternion.y /= self.Magnitude()
-        normalizedQuaternion.z /= self.Magnitude()
-        return normalizedQuaternion
-    
-    def Unit(self):
-        normalizedQuaternion = self.Normalized()
-
-        if normalizedQuaternion.w > 0: normalizedQuaternion.w = 1 
-        elif normalizedQuaternion.w < 0: normalizedQuaternion.w = -1 
-        else: normalizedQuaternion.w = 0
-
-        if normalizedQuaternion.x > 0: normalizedQuaternion.x = 1 
-        elif normalizedQuaternion.x < 0: normalizedQuaternion.x = -1 
-        else: normalizedQuaternion.x = 0
-
-        if normalizedQuaternion.y > 0: normalizedQuaternion.y = 1 
-        elif normalizedQuaternion.y < 0: normalizedQuaternion.y = -1 
-        else: normalizedQuaternion.y = 0
-
-        if normalizedQuaternion.z > 0: normalizedQuaternion.z = 1 
-        elif normalizedQuaternion.z < 0: normalizedQuaternion.z = -1 
-        else: normalizedQuaternion.z = 0
-
-        return normalizedQuaternion
-    
     def GetEulerAngles(self):
         sinr_cosp = 2 * (self.w * self.x + self.y * self.z)
         cosr_cosp = 1 - 2 * (self.x ** 2 + self.y ** 2)
@@ -164,6 +132,11 @@ class Quaternion:
         yaw_z = math.atan2(siny_cosp, cosy_cosp)
 
         return Vector3(math.degrees(roll_x), math.degrees(pitch_y), math.degrees(yaw_z))
+
+    def GetRotationMatrix(self):
+        return [[1 - 2 * (self.y ** 2 + self.z ** 2), 2 * (self.x * self.y - self.w * self.z), 2 * (self.x * self.z + self.w * self.y)],
+                [2 * (self.x * self.y + self.w * self.z), 1 - 2 * (self.x ** 2 + self.z ** 2), 2 * (self.y * self.z - self.w * self.x)],
+                [2 * (self.x * self.z - self.w * self.y), 2 * (self.y * self.z + self.w * self.x), 1 - 2 * (self.x ** 2 + self.y ** 2)]]
 
     def Clone(self):
         return Quaternion(self.w, self.x, self.y, self.z)

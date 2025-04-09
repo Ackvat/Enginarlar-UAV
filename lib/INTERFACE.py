@@ -4,6 +4,8 @@
 #            BAĞLANTILAR               #
 ########################################
 
+import time
+
 import lib.responseService as rs
 
 ########################################
@@ -20,7 +22,3 @@ class INTERFACE:
     def Response(self, response=None, name="", padding=False):
         if response["reason"]["level"] <= self.uav.responseLevel:
             print(rs.Format(response["text"], response["reason"], name, padding))
-
-    def I2CReadRegister(self, devAddr, regAddr):
-        self.i2c.write_byte(devAddr, regAddr)
-        return self.i2c.read_byte(devAddr)

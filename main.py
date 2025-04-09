@@ -14,7 +14,7 @@ from lib.UAV import UAV
 
 if __name__ == "__main__":
 	uav = UAV()
-	uav.responseLevel = 6
+	uav.responseLevel = 5
 
 	try:
 		while True:
