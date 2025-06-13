@@ -1,1 +1,1 @@
-Enginarlar Takımı İnsansız Hava Projesi anayazılım kaynağı.
+Enginarlar Takımı İnsansız Hava Aracı Projesi anayazılım kaynağı.

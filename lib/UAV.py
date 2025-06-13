@@ -4,14 +4,15 @@
 #            BAĞLANTILAR               #
 ########################################
 
-import os
 import time
-from smbus2 import SMBus
 
 import lib.responseService as responseService
 
 from lib.INTERFACE import INTERFACE
+from lib.PICOEXTEND import PICOEXTEND
 from lib.BNO055 import BNO055
+from lib.R12DS import R12DS
+from lib.PCA9685 import PCA9685
 
 ########################################
 #             İHA SINIFI               #
@@ -27,17 +28,21 @@ class UAV:
 
             "INIT_ERROR": {"text": "İHA başlatılamadı.", "reason": responseService.reasons["ERROR"]},
         }
-        
-        self.responseLevel = 5
-        self.systemFrequency = 60
 
-        self.i2c = SMBus(1)
+        self.responseLevel = 6
 
         self.interface = INTERFACE(uav=self)
 
         self.interface.Response(self.response["PREPARING"], self.devName)
 
+        self.systemFrequency = 60
+
+        self.i2c = self.interface.i2c
+
+        self.extended = PICOEXTEND(devName="PICO ARAYÜZ", uav=self)
+        self.receiver = R12DS(devName="R12DS", uav=self)
         self.bodyIMU = BNO055(devName="GÖVDE AÖS", uav=self)
+        self.heavySC = PCA9685(devName="SK1", uav=self)
         
         self.interface.Response(self.response["PREPARED"], self.devName)
         
@@ -45,7 +50,8 @@ class UAV:
     def mainCycle(self):
         self.bodyIMU.ReadAll()
 
-        print(self.bodyIMU.eulerOrientation)
-        print(self.bodyIMU.quaternionOrientation.GetEulerAngles())
+        receivedData = self.receiver.Read()
+        if receivedData:
+            print(receivedData)
 
         time.sleep(1/self.systemFrequency)

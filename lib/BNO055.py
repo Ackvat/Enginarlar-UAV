@@ -169,6 +169,8 @@ class BNO055:
 
         self.uav.interface.Response(self.response["PREPARING"], self.devName)
 
+        self.status = self.CheckChipID()
+
         self.sysCalibrationStatus = 0
         self.accelCalibrationStatus = 0
         self.magCalibrationStatus = 0
@@ -183,16 +185,11 @@ class BNO055:
         self.compass = Vector3(0, 0, 0)
         
 
-        if not self.CheckChipID():
+        if not self.status:
             self.uav.interface.Response(self.response["INIT_FAILED"], self.devName)
             return None
 
-        self.SetOperatingMode(self.byteData["OPR_MODE"]["CONFIG"])
-
-        self.SetUnitSelector(self.byteData["UNIT_SEL"]["METRIC"])
-        self.SetPowerMode(self.byteData["PWR_MODE"]["NORMAL"])
-
-        self.SetOperatingMode(self.byteData["OPR_MODE"]["NDOF"])
+        self.Open()
 
         self.uav.interface.Response(self.response["PREPARED"], self.devName)
     
@@ -393,6 +390,14 @@ class BNO055:
         self.GetCalibrationStatus()
 
         return True
+
+    def Open(self):
+        self.SetOperatingMode(self.byteData["OPR_MODE"]["CONFIG"])
+
+        self.SetUnitSelector(self.byteData["UNIT_SEL"]["METRIC"])
+        self.SetPowerMode(self.byteData["PWR_MODE"]["NORMAL"])
+
+        self.SetOperatingMode(self.byteData["OPR_MODE"]["NDOF"])
 
     def SuspendSensor(self):
         self.SetPowerMode(self.byteData["PWR_MODE"]["SUSPEND"])
