@@ -4,23 +4,21 @@
 #            BAĞLANTILAR               #
 ########################################
 
+from services import langService
+lang = langService.GetLanguage('tr_tr')
 
 ########################################
 #             TABAN SINIF              #
 ########################################
 
 class Base:
-    def __init__(self):
-        self.responseLevel = 0
+    def __init__(self, **kwargs):
+        self.name = kwargs.get('name', lang.strings['NONAME'])
+        print(self.name)
+        self.responseLevel = kwargs.get('responseLevel', 0)
         
+        self.response = {} | kwargs.get('response', {})
+        self.address = {} | kwargs.get('address', {})
+        self.byteData = {} | kwargs.get('byteData', {})
+        self.settings = {} | kwargs.get('settings', {})
 
-    def mainCycle(self):
-        raise NotImplementedError("This method should be overridden in subclasses.")
-    
-    def close(self):
-        if self.bodyIMU:
-            self.bodyIMU.SuspendSensor()
-        if self.receiver:
-            self.receiver.Close()
-        if self.i2c:
-            self.i2c.close()

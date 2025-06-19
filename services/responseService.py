@@ -6,31 +6,34 @@
 
 import datetime
 
+from services import langService
+lang = langService.GetLanguage('tr_tr')
+
 ########################################
 #              DÖNÜTLER                #
 ########################################
 
 reasons = {
-    "CONSOLE": {"reasonName": "KONSOL",
+    "CONSOLE": {"reasonName": lang.responseReasons["CONSOLE"],
                 "level": 4},
-    "INFO": {"reasonName": "BİLGİ",
+    "INFO": {"reasonName": lang.responseReasons["INFO"],
              "level": 4},
-    "ANSWER": {"reasonName": "YANIT",
+    "ANSWER": {"reasonName": lang.responseReasons["ANSWER"],
               "level": 1},
 
-    "DEBUG": {"reasonName": "DEBUG",
+    "DEBUG": {"reasonName": lang.responseReasons["DEBUG"],
               "level": 5},
-    "VERBOSE": {"reasonName": "VERBOSE",
+    "VERBOSE": {"reasonName": lang.responseReasons["VERBOSE"],
                 "level": 6},
     
-    "SUCCESS": {"reasonName": "BAŞARILI",
+    "SUCCESS": {"reasonName": lang.responseReasons["SUCCESS"],
                 "level": 4},
-    "FAIL": {"reasonName": "**BAŞARISIZ**", 
+    "FAIL": {"reasonName": f'**{lang.responseReasons["FAIL"]}**', 
              "level": 2},
     
-    "WARN": {"reasonName": "*UYARI*",
+    "WARN": {"reasonName": f'*{lang.responseReasons["WARN"]}*',
              "level": 3},
-    "ERROR": {"reasonName": "***HATA***", 
+    "ERROR": {"reasonName": f'***{lang.responseReasons["ERROR"]}***',
               "level": 1}
 }
 
@@ -38,7 +41,7 @@ reasons = {
 #            FONKSİYONLAR              #
 ########################################
 
-def Format(text="", reason=reasons["CONSOLE"], name="", padding=False):
+def Format(text=lang.strings["EMPTY"], reason=reasons["CONSOLE"], name=lang.strings["NONAME"], padding=False):
     if padding:
         pad = "\n"
     else:
