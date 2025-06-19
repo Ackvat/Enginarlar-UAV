@@ -25,3 +25,12 @@ class LanguageLibrary:
             "ERROR": "HATA"
         }
 
+        self.moduleResponses = {
+            "UAV": {
+                "INITIATE": "İHA anamodülü başlatılıyor..."
+            },
+            "E22LoRa": {
+                "INITIATE": "E22LoRa modülü başlatılıyor..."
+            }
+        }
+

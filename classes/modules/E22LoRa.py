@@ -4,21 +4,25 @@
 #            BAĞLANTILAR               #
 ########################################
 
+from services import responseService
 from services import langService
 lang = langService.GetLanguage('tr_tr')
 
+from classes.Base import Base
+
 ########################################
-#             TABAN SINIF              #
+#            E22LoRa SINIF             #
 ########################################
 
-class Base:
+class E22LoRa(Base):
     def __init__(self, **kwargs):
-        self.name = kwargs.get('name', lang.strings['NONAME'])
+        super().__init__(**kwargs)
         
+        self.name = kwargs.get('name', 'E22LoRa')
         self.responseLevel = kwargs.get('responseLevel', 0)
-        
-        self.response = {} | kwargs.get('response', {})
-        self.address = {} | kwargs.get('address', {})
-        self.byteData = {} | kwargs.get('byteData', {})
-        self.settings = {} | kwargs.get('settings', {})
+
+        self.response = lang.moduleResponses["E22LoRa"] | self.response
+
+    def Initiate(self):
+        pass
 
