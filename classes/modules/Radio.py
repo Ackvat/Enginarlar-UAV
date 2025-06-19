@@ -6,7 +6,7 @@
 
 from services import responseService
 from services import langService
-lang = langService.GetLanguage('tr_tr')
+lang = langService.GetLanguage("tr_tr")
 
 from classes.Base import Base
 
@@ -15,13 +15,12 @@ from classes.Base import Base
 ########################################
 
 class E22LoRa(Base):
-    def __init__(self, **kwargs):
+    def __init__(self, name=lang.names["E22LORA"], **kwargs):
         super().__init__(**kwargs)
         
-        self.name = kwargs.get('name', 'E22LoRa')
-        self.responseLevel = kwargs.get('responseLevel', 0)
+        self.name = name
 
-        self.response = lang.moduleResponses["E22LoRa"] | self.response
+        self.response = lang.moduleResponses["E22LORA"] | self.response
 
     def Initiate(self):
         pass
