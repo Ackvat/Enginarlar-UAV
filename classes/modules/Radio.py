@@ -15,13 +15,42 @@ from classes.Base import Base
 ########################################
 
 class E22LoRa(Base):
-    def __init__(self, name=lang.names["E22LORA"], **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-        self.name = name
+        self.name = kwargs.get("name", lang.names["E22LORA"])
 
         self.response = lang.moduleResponses["E22LORA"] | self.response
 
-    def Initiate(self):
-        pass
+        self.Initiate(**kwargs)
+
+    def Initiate(self, **kwargs):
+        # Modül başalıtması için en gerekli olan nesneler.
+        self.uav = kwargs.get("uav", None)
+        self.interface = self.uav.interface if self.uav else None
+
+        if self.interface is None:
+            raise responseService.Format(
+                text=lang.moduleResponses["E22LORA"]["NO_INTERFACE"],
+                reason=responseService.reasons["FAIL"],
+                name=self.name)
+        else:
+            self.interface.Response(
+                text=lang.moduleResponses["E22LORA"]["INITIATE"],
+                reason=responseService.reasons["INFO"],
+                name=self.name)
+            try:
+                # LoRa modülünün ayarlamaları.
+                self.port = kwargs.get("port", self.interface.UART1)
+
+                self.interface.Response(
+                text=lang.moduleResponses["E22LORA"]["READY"],
+                reason=responseService.reasons["SUCCESS"],
+                name=self.name)
+            except Exception as e:
+                self.interface.Response(
+                    text=lang.moduleResponses["E22LORA"]["FAILED"],
+                    reason=responseService.reasons["FAIL"],
+                    name=self.name)
+                raise e
 

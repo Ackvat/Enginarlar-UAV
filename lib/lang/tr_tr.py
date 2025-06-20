@@ -16,6 +16,7 @@ class LanguageLibrary:
         self.names = {
             "UAV": "İHA",
             "INTERFACE": "Arayüz",
+            "E22LORA": "E22LoRa",
         }
 
         self.responseReasons = {
@@ -34,8 +35,8 @@ class LanguageLibrary:
             "UAV": {
                 "INITIATE": "İHA anamodülü başlatılıyor...",
 
-                "UAV_READY": "İHA hazır.",
-                "UAV_FAILED": "İHA hazırlanamadı.",
+                "READY": "İHA hazır.",
+                "FAILED": "İHA hazırlanamadı.",
             },
             "INTERFACE": {
                 "INITIATE": "Arayüz başlatılıyor...",
@@ -47,6 +48,10 @@ class LanguageLibrary:
             },
             "E22LORA": {
                 "INITIATE": "E22LoRa modülü başlatılıyor...",
+
+                "READY": "E22LoRa modülü hazır.",
+                "FAILED": "E22LoRa modülü başlatılamadı.",
+                "NO_INTERFACE": "E22LoRa modülü için arayüz bulunamadı.",
             }
         }
 
