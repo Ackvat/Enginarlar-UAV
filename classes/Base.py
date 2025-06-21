@@ -23,3 +23,7 @@ class Base:
         self.states = {} | kwargs.get("states", {})
         self.settings = {} | kwargs.get("settings", {})
 
+    # Fonksiyon sınıfları:
+    # B: Başlangıç, yüksek derinlikli değişkenleri ve argümanları destekler.
+    # H: Hızlı, derinlik gerek değişkenler gerek argümanlar için desteklenmez.
+    # N: Normal, duruma göre değişkenlik gösterebilir.

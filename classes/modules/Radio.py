@@ -21,9 +21,12 @@ class E22LoRa(Base):
         self.name = kwargs.get("name", lang.names["E22LORA"])
 
         self.response = lang.moduleResponses["E22LORA"] | self.response
-
+        self.states = {
+            "PAIRED": False
+        } | self.states
         self.Initiate(**kwargs)
 
+    # B sınıf fonksiyon.
     def Initiate(self, **kwargs):
         # Modül başalıtması için en gerekli olan nesneler.
         self.uav = kwargs.get("uav", None)
@@ -53,4 +56,9 @@ class E22LoRa(Base):
                     reason=responseService.reasons["FAIL"],
                     name=self.name)
                 raise e
+
+    # H sınıf fonksiyon.
+    # LoRa modülünün FIFO kuyruklu veri gönderme fonksiyonu.
+    def Send(self, data):
+        pass
 
