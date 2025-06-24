@@ -6,7 +6,7 @@
 
 import datetime
 
-from services import langService
+from old.v2 import langService
 lang = langService.GetLanguage('tr_tr')
 
 ########################################

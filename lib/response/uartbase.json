@@ -1,0 +1,49 @@
+{
+	"read_success": {
+		"tr": "UART'tan okuma işlemi başarıyla gerçekleştirildi."
+	},
+	"read_error": {
+		"tr": "UART'tan okuma işlemi başarısız oldu."
+	},
+	"write_success": {
+		"tr": "UART'a yazma işlemi başarıyla gerçekleştirildi."
+	},
+	"write_error": {
+		"tr": "UART'a yazma işlemi başarısız oldu."
+	},
+
+	"opening": {
+		"tr": "UART bağlantısı açılıyor..."
+	},
+	"closing": {
+		"tr": "UART bağlantısı kapatılıyor..."
+	},
+	"open_success": {
+		"tr": "UART bağlantısı başarıyla açıldı."
+	},
+	"open_error": {
+		"tr": "UART bağlantısı açılamadı."
+	},
+	"close_success": {
+		"tr": "UART bağlantısı başarıyla kapatıldı."
+	},
+	"close_error": {
+		"tr": "UART bağlantısı kapatılamadı."
+	},
+	"already_open": {
+		"tr": "UART bağlantısı zaten açık."
+	},
+	"already_closed": {
+		"tr": "UART bağlantısı zaten kapalı."
+	},
+	"not_open": {
+		"tr": "UART bağlantısı açık değil."
+	},
+	"not_closed": {
+		"tr": "UART bağlantısı kapalı değil."
+	},
+
+	"uart_error": {
+		"tr": "UART hatası."
+	}
+}

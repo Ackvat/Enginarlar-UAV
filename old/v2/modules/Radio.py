@@ -4,8 +4,8 @@
 #            BAĞLANTILAR               #
 ########################################
 
-from services import responseService
-from services import langService
+from old.v2 import responseService
+from old.v2 import langService
 lang = langService.GetLanguage("tr_tr")
 
 from classes.Base import Base
@@ -21,13 +21,9 @@ class E22LoRa(Base):
         self.name = kwargs.get("name", lang.names["E22LORA"])
 
         self.response = lang.moduleResponses["E22LORA"] | self.response
-        self.states = {
-            "PAIRED": False
-        } | self.states
-        self.Initiate(**kwargs)
+        
+        self.paired = False
 
-    # B sınıf fonksiyon.
-    def Initiate(self, **kwargs):
         # Modül başalıtması için en gerekli olan nesneler.
         self.uav = kwargs.get("uav", None)
         self.interface = self.uav.interface if self.uav else None

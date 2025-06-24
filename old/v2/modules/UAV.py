@@ -9,8 +9,8 @@ import serial
 from classes.Base import Base
 from classes.modules.Radio import E22LoRa
 
-from services import responseService
-from services import langService
+from old.v2 import responseService
+from old.v2 import langService
 lang = langService.GetLanguage("tr_tr")
 
 ########################################
@@ -26,10 +26,6 @@ class UAV(Base):
 
         self.response = lang.moduleResponses["UAV"] | self.response
 
-        self.Initiate(**kwargs)
-
-    # B sınıf fonksiyon.
-    def Initiate(self, **kwargs):
         # Henüz arayüz hazırlanmadığından, gömülü tepki fonksiyonları kullanılıyor.
         print(responseService.Format(text=lang.moduleResponses["UAV"]["INITIATE"], reason=responseService.reasons["INFO"], name=self.name))
         try:
@@ -51,14 +47,7 @@ class Interface(Base):
         self.name = kwargs.get("name", lang.names["INTERFACE"])
 
         self.response = lang.moduleResponses["INTERFACE"] | self.response
-        self.states = {
-            "UART1_READY": False,
-        } | self.states
-
-        self.Initiate(**kwargs)
     
-    # B sınıf fonksiyon.
-    def Initiate(self, **kwargs):
         # Arayüz için en gerekli olan nesneler.
         self.uav = kwargs.get("uav", None)
         self.responseLevel = kwargs.get("responseLevel", self.uav.responseLevel if self.uav else 0)
@@ -70,17 +59,37 @@ class Interface(Base):
             self.Response(text=lang.moduleResponses["INTERFACE"]["RESPONSE_SERVICE_READY"], reason=responseService.reasons["SUCCESS"], name=self.name)
             
             # Portların ayarlanması.
-            self.UART1 = kwargs.get("UART1", serial.Serial(
-                port=kwargs.get("uart1Port", "/dev/ttyAMA0"),
-                baudrate=kwargs.get("uart1Baudrate", 115200),
-                timeout=kwargs.get("uart1Timeout", 1)
-            ))
+            self.UART1 = kwargs.get("UART1", self.UART(interface=self, name="UART1", port="/dev/ttyAMA0"))
             self.states["UART1_READY"] = True
-            self.Response(text=lang.moduleResponses["INTERFACE"]["UART_READY"](f'UART1 - {self.UART1.portstr}'), reason=responseService.reasons["SUCCESS"], name=self.name)
+            
+            self.Response(text=lang.moduleResponses["INTERFACE"]["UART_READY"](f'UART1 - {self.UART1.port.portstr}'), reason=responseService.reasons["SUCCESS"], name=self.name)
         except serial.SerialException as e:
             self.states["UART1_READY"] = False
-            self.Response(text=lang.moduleResponses["INTERFACE"]["UART_FAILED"](f'UART1 - {self.UART1.portstr}'), reason=responseService.reasons["FAIL"], name=self.name)
+            self.Response(text=lang.moduleResponses["INTERFACE"]["UART_FAILED"](f'UART1 - {self.UART1.port.portstr}'), reason=responseService.reasons["FAIL"], name=self.name)
             raise e
+    
+    class UART(Base):
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+            
+            self.port = None
+            self.status = False
+
+            self.interface = kwargs.get("interface", None)
+
+            try:
+                if self.port is None:
+                    self.port = serial.Serial(
+                        port=kwargs.get("port", "/dev/ttyAMA0"),
+                        baudrate=kwargs.get("baudrate", 115200),
+                        timeout=kwargs.get("timeout", 1)
+                        )
+                self.status = True
+                self.interface.Response(text=lang.moduleResponses["INTERFACE"]["UART_READY"](self.port.portstr), reason=responseService.reasons["SUCCESS"], name=self.name)
+            except serial.SerialException as e:
+                self.status = False
+                self.interface.Response(text=lang.moduleResponses["INTERFACE"]["UART_FAILED"](self.port.portstr), reason=responseService.reasons["FAIL"], name=self.name)
+                raise e
     
     # H sınıf fonksiyon.
     # Konsol ve kayır yanıtları.

@@ -1,0 +1,19 @@
+{
+	"no_name": {
+		"tr": "İSİMSİZ"
+	},
+	"unknown_response": {
+		"tr": "Bilinmeyen yanıt."
+	},
+	"unknown_language": {
+		"en": "Unknown language.",
+		"tr": "Bilinmeyen dil."
+	},
+
+	"init_success": {
+		"tr": "Başlatma başarılı."
+	},
+	"init_error": {
+		"tr": "Başlatma başarısız."
+	}
+}
