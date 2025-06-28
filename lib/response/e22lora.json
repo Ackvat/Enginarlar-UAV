@@ -1,0 +1,53 @@
+{
+    "e22lora_init_error": {
+        "tr": "E22 LoRa modülü başlatılırken bir hata oluştu."
+    },
+    "e22lora_init_success": {
+        "tr": "E22 LoRa modülü başarıyla başlatıldı."
+    },
+
+    "e22lora_reading_started": {
+        "tr": "E22 LoRa modülünden mesaj okumaya başlandı."
+    },
+    "e22lora_reading_already_running": {
+        "tr": "E22 LoRa modülünden mesaj okumaya zaten başlanmış."
+    },
+    "e22lora_reading_stopped": {
+        "tr": "E22 LoRa modülünden mesaj okumaya son verildi."
+    },
+    "e22lora_read_error": {
+        "tr": "Gelen mesajlar okunmaya çalışılırken bir hata oluştu."
+    },
+
+    "e22lora_message_received": {
+        "tr": "E22 LoRa modülünden mesaj alındı."
+    },
+    "e22lora_no_message": {
+        "tr": "E22 LoRa modülünden alınacak mesaj yok."
+    },
+
+    "e22lora_module_opening": {
+        "tr": "E22 LoRa modülü açılıyor..."
+    },
+    "e22lora_module_closing": {
+        "tr": "E22 LoRa modülü kapatılıyor..."
+    },
+    "e22lora_module_opened": {
+        "tr": "E22 LoRa modulü açıldı."
+    },
+    "e22lora_module_open_error": {
+        "tr": "E22 LoRa modülü açılırken bir hata oluştu. Seri portu doğru mu?"
+    },
+    "e22lora_module_closed": {
+        "tr": "E22 LoRa modülü kapatıldı."
+    },
+    "e22lora_module_close_error": {
+        "tr": "E22 LoRa modülü kapatılırken bir hata oluştu."
+    },
+    "e22lora_module_already_opened": {
+        "tr": "E22 LoRa modülü zaten açık."
+    },
+    "e22lora_module_already_closed": {
+        "tr": "E22 LoRa modülü zaten kapalı."
+    }
+}

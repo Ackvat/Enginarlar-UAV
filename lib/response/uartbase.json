@@ -1,49 +1,59 @@
 {
-	"read_success": {
+	"uart_read_success": {
 		"tr": "UART'tan okuma işlemi başarıyla gerçekleştirildi."
 	},
-	"read_error": {
+	"uart_read_error": {
 		"tr": "UART'tan okuma işlemi başarısız oldu."
 	},
-	"write_success": {
+	"uart_write_success": {
 		"tr": "UART'a yazma işlemi başarıyla gerçekleştirildi."
 	},
-	"write_error": {
+	"uart_write_error": {
 		"tr": "UART'a yazma işlemi başarısız oldu."
 	},
 
-	"opening": {
+	"uart_opening": {
 		"tr": "UART bağlantısı açılıyor..."
 	},
-	"closing": {
+	"uart_closing": {
 		"tr": "UART bağlantısı kapatılıyor..."
 	},
-	"open_success": {
+	"uart_open_success": {
 		"tr": "UART bağlantısı başarıyla açıldı."
 	},
-	"open_error": {
+	"uart_open_error": {
 		"tr": "UART bağlantısı açılamadı."
 	},
-	"close_success": {
+	"uart_close_success": {
 		"tr": "UART bağlantısı başarıyla kapatıldı."
 	},
-	"close_error": {
+	"uart_close_error": {
 		"tr": "UART bağlantısı kapatılamadı."
 	},
-	"already_open": {
+	"uart_already_open": {
 		"tr": "UART bağlantısı zaten açık."
 	},
-	"already_closed": {
+	"uart_already_closed": {
 		"tr": "UART bağlantısı zaten kapalı."
 	},
-	"not_open": {
+	"uart_not_open": {
 		"tr": "UART bağlantısı açık değil."
 	},
-	"not_closed": {
+	"uart_not_closed": {
 		"tr": "UART bağlantısı kapalı değil."
+	},
+	"uart_changing": {
+		"tr": "UART bağlantısı değiştiriliyor..."
+	},
+
+	"uart_initiating_port": {
+		"tr": "UART portu başlatılıyor..."
 	},
 
 	"uart_error": {
 		"tr": "UART hatası."
+	},
+	"uart_no_serial": {
+		"tr": "Seri port tanımlı değil."
 	}
 }

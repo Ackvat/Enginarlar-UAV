@@ -67,46 +67,75 @@ class UARTBase(Base):
             classResponse = json.load(f)
             self.response = JSONService.MergeJSON(self.response, classResponse)
 
-        # Varsayılan seri arayüzü
-        self.ser = kwargs.get("serial", serial.Serial(
-            port=kwargs.get("port", "/dev/ttyAMA0"),
-            baudrate=kwargs.get("baudrate", 9600),
-            timeout=kwargs.get("timeout", 1)
-        ))
+        self.ser = kwargs.get("serial", None)  # Seri arayüzü nesnesi
 
-        # Arayüzü temizle
-        self.ser.flushInput()  # Giriş tamponunu temizle
+        self.OpenSerial(**kwargs)  # Seri arayüzü başlatma
 
     # Arayüzü başlatma
-    def Open(self):
-        self.Log("opening", logging.INFO)
-        if not self.ser.is_open:
+    def OpenSerial(self, **kwargs):
+        self.Log("uart_opening", logging.INFO)
+        if self.ser is None:
+            self.Log("uart_no_serial", logging.ERROR)
+            self.Log("uart_initiating_port", logging.INFO)
+
             try:
-                self.ser.open()
-                self.Log("open_success", logging.INFO)
-            except serial.SerialException as e:
-                self.Log(f"open_error: {e}", logging.ERROR)
-                raise e
+                # Varsayılan seri arayüzü
+                self.ser = serial.Serial(
+                    port=kwargs.get("port", "/dev/ttyAMA0"),
+                    baudrate=kwargs.get("baudrate", 9600),
+                    timeout=kwargs.get("timeout", 1),
+                    parity=serial.PARITY_NONE,
+                    stopbits=serial.STOPBITS_ONE,
+                    bytesize=serial.EIGHTBITS,
+                )
+                self.ser.flushInput()  # Giriş tamponunu temizle
+                return True
+            except Exception as e:
+                self.Log(f"uart_open_error", logging.ERROR)
+                self.Log(f"{e}", logging.ERROR)
+                return False
         else:
-            self.Log("already_open", logging.WARNING)
+            if not self.ser.is_open:
+                try:
+                    self.ser.open()
+                    self.ser.flushInput()  # Giriş tamponunu temizle
+                    self.Log("uart_open_success", logging.INFO)
+                    return True
+                except serial.SerialException as e:
+                    self.Log(f"uart_open_error: {e}", logging.ERROR)
+                    self.Log(f"{e}", logging.ERROR)
+                    return False
+            else:
+                self.Log("uart_already_open", logging.WARNING)
+                return True
     
     # Arayüzü kapat
-    def Close(self):
-        self.Log("closing", logging.INFO)
+    def CloseSerial(self):
+        self.Log("uart_closing", logging.INFO)
         if self.ser.is_open:
             try:
                 self.ser.close()
-                self.Log("close_success", logging.INFO)
+                self.Log("uart_close_success", logging.INFO)
+                return True
             except serial.SerialException as e:
-                self.Log(f"close_error: {e}", logging.ERROR)
-                raise e
+                self.Log(f"uart_close_error: {e}", logging.ERROR)
+                self.Log(f"{e}", logging.ERROR)
+                return False
         else:
-            self.Log("already_closed", logging.WARNING)
+            self.Log("uart_already_closed", logging.WARNING)
+            return True
+
+    # Arayüz kanalını değiştirme fonksiyonu
+    def ChangeSerial(self, **kwargs):
+        self.Log("uart_changing", logging.INFO)
+        if self.CloseSerial():
+            pass
+            
 
     # Veri gönderme
-    def Write(self, data, newLine=True):
+    def WriteToSerial(self, data, newLine=True):
         if not self.ser.is_open:
-            self.Log("not_open", logging.ERROR)
+            self.Log("uart_not_open", logging.ERROR)
             return False
         try:
             # Burada loglama olmamalı çünkü yüksek döngülerde kullanılabilir
@@ -117,20 +146,20 @@ class UARTBase(Base):
             self.ser.write(data.encode('utf-8'))
             return True
         except serial.SerialException as e:
-            self.Log("write_error", logging.ERROR)
+            self.Log("uart_write_error", logging.ERROR)
             self.Log(f"{e}", logging.ERROR)
             return False
     
     # Veri okuma
-    def Read(self, size=1):
+    def ReadFromSerial(self, size=1):
         if not self.ser.is_open:
-            self.Log("not_open", logging.ERROR)
+            self.Log("uart_not_open", logging.ERROR)
             return None
         try:
             # Burada loglama olmamalı çünkü yüksek döngülerde kullanılabilir
             data = self.ser.readline().decode('utf-8').strip()
             return data
         except serial.SerialException as e:
-            self.Log("read_error", logging.ERROR)
+            self.Log("uart_read_error", logging.ERROR)
             self.Log(f"{e}", logging.ERROR)
             return None
