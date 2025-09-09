@@ -150,6 +150,3 @@ def Clamp(n, min, max):
         return max
     else: 
         return n 
-
-def Map(n, minN, maxN, minG, maxG):
-    return (n / (maxN - minN) * (maxG - minG))

@@ -1,0 +1,22 @@
+{
+    "uav_init_start": {
+        "tr": "İHA başlatılıyor..."
+    },
+    "uav_init_success": {
+        "tr": "İHA başarıyla başlatıldı."
+    },
+    "uav_init_error": {
+        "tr": "İHA başlatılırken bir hata oluştu!"
+    },
+
+    "uav_main_loop_interrupt": {
+        "tr": "İHA anayordam döngüsü müdahele ile durduruldu."
+    },
+
+    "uav_closing": {
+        "tr": "İHA kapatılıyor..."
+    },
+    "uav_closed": {
+        "tr": "İHA kapatıldı."
+    }
+}

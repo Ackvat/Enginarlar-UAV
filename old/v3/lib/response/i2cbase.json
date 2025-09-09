@@ -1,0 +1,8 @@
+{
+	"i2cbase_read_error": {
+        "tr": "I2C kanalında okuma yapılırken bir hata oluştu!"
+    },
+    "i2cbase_write_error": {
+        "tr": "I2C kanalına yazma yapılırken bir hata oluştu!"
+    }
+}
