@@ -52,7 +52,7 @@ class PCA9685:
         }
         
         self.settings = {
-            "FREQUENCY": 50, # Varsayılan modül çalışma frekansı
+            "FREQUENCY": 50, # Varsayılan Birim çalışma frekansı
             "minPulse": 205, # 205 @ 50 Hz | 1363 @ 333 Hz
             "maxPulse": 410, # 410 @ 50 Hz | 2726 @ 333 Hz
             "PULSE_LENGTH": 4095,  # 12-bit çözünürlük

@@ -180,7 +180,7 @@ class BNO055:
         self.linearAcceleration = Vector3(0, 0, 0)
         self.gravity = Vector3(0, 0, 0)
         self.eulerOrientation = Vector3(0, 0, 0)
-        self.quaternionOrientation = Quaternion(0, 0, 0, 0)
+        self.quaternionOrientation = Quaternion(0, 0, 0, 1)
         self.angularVelocity = Vector3(0, 0, 0)
         self.compass = Vector3(0, 0, 0)
         
@@ -388,7 +388,6 @@ class BNO055:
         self.GetAngularVelocity()
         self.GetMagnetometer()
         self.GetCalibrationStatus()
-
         return True
 
     def Open(self):

@@ -45,11 +45,13 @@ class Base:
 
 
     
-    # Tüm nesneler için loglama fonksiyonu
+    # Tüm nesneler için loglama işlevi
     def Log(self, message, level=logging.DEBUG):
+        if level == logging.ERROR:
+            self.Print(message)
         self.log.log(level, message)
 
-    # Tüm nesneler için yazdırma fonksiyonu.
+    # Tüm nesneler için yazdırma işlevi.
     def Print(self, message, level=logging.DEBUG):
         print(message)
 
@@ -62,8 +64,9 @@ class UARTBase(Base):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        # FIFO eylem sıralama nesnesi
-        self.queue = Queue()
+        # FIFO eylem ve veri sıralama nesneleri
+        self.inQueue = kwargs.get("inQueue", Queue())
+        self.outQueue = kwargs.get("outQueue", Queue())
 
         self.ser = kwargs.get("serial", None)  # Seri arayüzü nesnesi
         self.port = kwargs.get("port", "/dev/ttyAMA0")
@@ -76,7 +79,6 @@ class UARTBase(Base):
     def OpenSerial(self, **kwargs):
         self.Log("UART arayüzü başlatılıyor...", logging.INFO)
         if self.ser is None:
-            self.Log("UART seri portu bulunamadı!", logging.WARNING)
             self.Log("UART seri portu başlatılıyor...", logging.INFO)
             try:
                 # Varsayılan seri arayüzü
@@ -113,19 +115,22 @@ class UARTBase(Base):
     def CloseSerial(self):
         self.Log("UART arayüzü kapatılıyor.", logging.INFO)
         self.Log(f'Adres: {self.ser.port} | BR: {self.ser.baudrate}', logging.INFO)
-        if hasattr(self.ser, "is_open") and self.ser.is_open:
-            try:
-                self.ser.close()
-                self.Log("UART arayüzü kapatıldı!", logging.INFO)
+        if self.ser == None:
+            self.Log("UART seri portu bulunamadı!", logging.WARNING)
+            if hasattr(self.ser, "is_open") and self.ser.is_open:
+                try:
+                    self.ser.close()
+                    self.ser = None
+                    self.Log("UART arayüzü kapatıldı!", logging.INFO)
+                    return True
+                except serial.SerialException as e:
+                    self.Log(f"UART arayüzü kapatılırken bir hata oluştur! {e}", logging.ERROR)
+                    return False
+            else:
+                self.Log("UART arayüzü zaten kapalı!", logging.WARNING)
                 return True
-            except serial.SerialException as e:
-                self.Log(f"UART arayüzü kapatılırken bir hata oluştur! {e}", logging.ERROR)
-                return False
-        else:
-            self.Log("UART arayüzü zaten kapalı!", logging.WARNING)
-            return True
 
-    # Arayüz kanalını değiştirme fonksiyonu
+    # Arayüz kanalını değiştirme işlevi
     def ChangeSerial(self, **kwargs):
         self.Log("UART arayüzü değiştiriliyor...", logging.INFO)
         if self.CloseSerial():
@@ -134,14 +139,22 @@ class UARTBase(Base):
             
 
     # Veri gönderme
-    def WriteToSerial(self, data, newLine=True):
+    def Write(self, data, newLine=True):
         if newLine:
             data += '\n'
         self.ser.write(data.encode('utf-8'))
         return True
     
-    # Veri okuma
-    def ReadLine(self, size=1):
+    # Büyüklüğüne göre veri okuma.
+    def Read(self, size=1):
+        data = self.ser.read(size)
+        if data:
+            return data
+        else:
+            return None
+
+    # Veri satırı okuma
+    def ReadLine(self):
         data = self.ser.readline().decode('utf-8').strip()
         if data:
             return data
@@ -149,9 +162,8 @@ class UARTBase(Base):
             return None
 
     # Bekleyen veriyi okuma
-    def ReadAllInWaiting(self, size=1):
-        #data = self.ser.read(self.ser.in_waiting)
-        data = self.ser.read(size)
+    def ReadAllInWaiting(self):
+        data = self.ser.read(self.ser.in_waiting)
         if data:
             return data
         else:
@@ -168,17 +180,31 @@ class I2CBase(Base):
 
         self.i2c = SMBus(1)
 
+        # Birimin veri adresleri.
         self.address = kwargs.get("address", {})
+
+        # Birimin komutlarında kullanılar veriler.
+        self.byteData = kwargs.get("byteData", {})
+
+        # Birimin ayarları.
         self.settings = kwargs.get("settings", {})
 
 
 
+    # I2C hattını kapatır. Şimdilik gerekli bir durum yok. Ama dursun.
     def CloseI2C(self):
         return True
     
 
     # I2C nesnesinin belirtilen adresten yalın ve tek veri okumasını sağlar.
-    def I2CReadByte(self, address, offset):
+    def I2CReadByte(self, address):
+        readData = self.i2c.read_byte(address)
+        if readData:
+            return readData
+        else:
+            return None
+    
+    def I2CReadByteData(self, address, offset):
         readData = self.i2c.read_byte_data(address, offset)
         if readData:
             return readData

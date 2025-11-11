@@ -33,7 +33,7 @@ class LanguageLibrary:
 
         self.moduleResponses = {
             "UAV": {
-                "INITIATE": "İHA anamodülü başlatılıyor...",
+                "INITIATE": "İHA anaBirimi başlatılıyor...",
 
                 "READY": "İHA hazır.",
                 "FAILED": "İHA hazırlanamadı.",
@@ -47,11 +47,11 @@ class LanguageLibrary:
                 "UART_FAILED": lambda port: f"{port} arayüzü başlatılamadı.",
             },
             "E22LORA": {
-                "INITIATE": "E22LoRa modülü başlatılıyor...",
+                "INITIATE": "E22LoRa Birimi başlatılıyor...",
 
-                "READY": "E22LoRa modülü hazır.",
-                "FAILED": "E22LoRa modülü başlatılamadı.",
-                "NO_INTERFACE": "E22LoRa modülü için arayüz bulunamadı.",
+                "READY": "E22LoRa Birimi hazır.",
+                "FAILED": "E22LoRa Birimi başlatılamadı.",
+                "NO_INTERFACE": "E22LoRa Birimi için arayüz bulunamadı.",
             }
         }
 

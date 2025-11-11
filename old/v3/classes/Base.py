@@ -51,7 +51,7 @@ class Base:
 
 
     
-    # Tüm nesneler için loglama fonksiyonu
+    # Tüm nesneler için loglama işlevi
     def Log(self, response, level=logging.DEBUG):
         if response not in self.response:
             textResponse = "CARRY | " + response
@@ -66,7 +66,7 @@ class Base:
 
         self.log.log(level, textResponse)
 
-    # Tüm nesneler için yazdırma fonksiyonu.
+    # Tüm nesneler için yazdırma işlevi.
     def Print(self, response, level=logging.DEBUG):
         if response not in self.response:
             textResponse = response
@@ -152,7 +152,7 @@ class UARTBase(Base):
             self.Log("uart_already_closed", logging.WARNING)
             return True
 
-    # Arayüz kanalını değiştirme fonksiyonu
+    # Arayüz kanalını değiştirme işlevi
     def ChangeSerial(self, **kwargs):
         self.Log("uart_changing", logging.INFO)
         if self.CloseSerial():
@@ -161,7 +161,7 @@ class UARTBase(Base):
             
 
     # Veri gönderme
-    def WriteToSerial(self, data, newLine=True):
+    def Write(self, data, newLine=True):
         if not self.ser.is_open:
             self.Log("uart_not_open", logging.ERROR)
             return False

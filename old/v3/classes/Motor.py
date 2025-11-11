@@ -56,7 +56,7 @@ class PCA9685(I2CBase):
         }
 
         self.settings = {
-            "FREQUENCY": 50, # Varsayılan modül çalışma frekansı
+            "FREQUENCY": 50, # Varsayılan Birim çalışma frekansı
             "MIN_PULSE": 1000, # 1000 @ 50 Hz | 1000 @ 333 Hz
             "MAX_PULSE": 2500, # 2500 @ 50 Hz | 2500 @ 333 Hz
             "PULSE_LENGTH": 4095,  # 12-bit çözünürlük
@@ -70,7 +70,7 @@ class PCA9685(I2CBase):
 
 
 
-    # Modülü açmak için.
+    # Birimi açmak için.
     def OpenModule(self):
         self.Log("pca9685_module_opening", logging.INFO)
         try:
@@ -82,7 +82,7 @@ class PCA9685(I2CBase):
             self.Log("pca9685_module_open_error", logging.ERROR)
             self.Log(f"{e}", logging.ERROR)
 
-    # Modülü kapatmak için.
+    # Birimi kapatmak için.
     def CloseModule(self):
         self.Log("pca9685_module_closing", logging.INFO)
         try:
@@ -93,7 +93,7 @@ class PCA9685(I2CBase):
             self.Log("pca9685_module_close_error", logging.ERROR)
             self.Log(f"{e}", logging.ERROR)
 
-    # Modülü yeniden başlatır.
+    # Birimi yeniden başlatır.
     def RestartModule(self):
         self.I2CWriteByteData(offset=self.address["MODE1"], data=0x10)
         self.I2CWriteByteData(offset=self.address["MODE1"], data=0x00)

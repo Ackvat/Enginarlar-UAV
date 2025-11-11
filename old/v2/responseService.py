@@ -67,7 +67,7 @@ reasons = {
 #            FONKSİYONLAR              #
 ########################################
 
-# H sınıf fonksiyon.
+# H sınıf işlev.
 def Format(text=lang.strings["EMPTY"], reason=reasons["CONSOLE"], name=lang.strings["NONAME"], padding=False):
     if padding:
         pad = "\n"

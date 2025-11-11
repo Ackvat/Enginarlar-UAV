@@ -24,7 +24,7 @@ class E22LoRa(Base):
         
         self.paired = False
 
-        # Modül başalıtması için en gerekli olan nesneler.
+        # Birim başalıtması için en gerekli olan nesneler.
         self.uav = kwargs.get("uav", None)
         self.interface = self.uav.interface if self.uav else None
 
@@ -39,7 +39,7 @@ class E22LoRa(Base):
                 reason=responseService.reasons["INFO"],
                 name=self.name)
             try:
-                # LoRa modülünün ayarlamaları.
+                # LoRa Biriminün ayarlamaları.
                 self.port = kwargs.get("port", self.interface.UART1)
 
                 self.interface.Response(
@@ -53,8 +53,8 @@ class E22LoRa(Base):
                     name=self.name)
                 raise e
 
-    # H sınıf fonksiyon.
-    # LoRa modülünün FIFO kuyruklu veri gönderme fonksiyonu.
+    # H sınıf işlev.
+    # LoRa Biriminün FIFO kuyruklu veri gönderme işlevi.
     def Send(self, data):
         pass
 

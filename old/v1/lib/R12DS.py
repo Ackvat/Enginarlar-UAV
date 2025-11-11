@@ -43,7 +43,7 @@ class R12DS:
 
         channels = [0] * 16
 
-        # Bit unpacking magic – straight outta datasheet hell
+        # Bilgi paketini açma işlemi.
         channels[0]  = (data[1]     | data[2]  << 8) & 0x07FF
         channels[1]  = (data[2]  >> 3 | data[3]  << 5) & 0x07FF
         channels[2]  = (data[3]  >> 6 | data[4]  << 2 | data[5] << 10) & 0x07FF

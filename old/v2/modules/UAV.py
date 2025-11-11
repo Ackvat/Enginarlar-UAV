@@ -26,7 +26,7 @@ class UAV(Base):
 
         self.response = lang.moduleResponses["UAV"] | self.response
 
-        # Henüz arayüz hazırlanmadığından, gömülü tepki fonksiyonları kullanılıyor.
+        # Henüz arayüz hazırlanmadığından, gömülü tepki işlevları kullanılıyor.
         print(responseService.Format(text=lang.moduleResponses["UAV"]["INITIATE"], reason=responseService.reasons["INFO"], name=self.name))
         try:
             self.interface = Interface(uav=self)
@@ -34,7 +34,7 @@ class UAV(Base):
 
             self.interface.Response(text=lang.moduleResponses["UAV"]["READY"], reason=responseService.reasons["SUCCESS"], name=self.name)
         except Exception as e:
-            # Eğer arayüz başlatılamazsa, yine gömülü tepki fonksiyonunu kullan.
+            # Eğer arayüz başlatılamazsa, yine gömülü tepki işlevinu kullan.
             print(responseService.Format(text=lang.moduleResponses["UAV"]["FAILED"], reason=responseService.reasons["FAIL"], name=self.name))
             raise e
 
@@ -91,7 +91,7 @@ class Interface(Base):
                 self.interface.Response(text=lang.moduleResponses["INTERFACE"]["UART_FAILED"](self.port.portstr), reason=responseService.reasons["FAIL"], name=self.name)
                 raise e
     
-    # H sınıf fonksiyon.
+    # H sınıf işlev.
     # Konsol ve kayır yanıtları.
     def Response(self, text=None, reason=None, name=None, padding=False):
         if reason is not None and reason["level"] <= self.uav.responseLevel:

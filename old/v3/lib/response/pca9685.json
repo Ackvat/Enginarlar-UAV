@@ -1,43 +1,43 @@
 {
 	"pca9685_module_init_success": {
-        "tr": "Modül başarıyla başlatıldı."
+        "tr": "Birim başarıyla başlatıldı."
     },
     "pca9685_module_init_error": {
-        "tr": "Modül başlatılırken bir hata oluştu!"
+        "tr": "Birim başlatılırken bir hata oluştu!"
     },
 
     "pca9685_module_opening": {
-        "tr": "Modül açılıyor..."
+        "tr": "Birim açılıyor..."
     },
     "pca9685_module_open_success": {
-        "tr": "Modül başarıyla açıldı."
+        "tr": "Birim başarıyla açıldı."
     },
     "pca9685_module_open_error": {
-        "tr": "Modül açılırken bir hata oluştu!"
+        "tr": "Birim açılırken bir hata oluştu!"
     },
     "pca9685_module_closing": {
-        "tr": "Modül kapatılıyor..."
+        "tr": "Birim kapatılıyor..."
     },
     "pca9685_module_close_success": {
-        "tr": "Modül başarıyla kapatıldı."
+        "tr": "Birim başarıyla kapatıldı."
     },
     "pca9685_module_close_error": {
-        "tr": "Modül kapatılırken bir hata oluştu!"
+        "tr": "Birim kapatılırken bir hata oluştu!"
     },
 
     "pca9685_module_not_open": {
-        "tr": "Modül işlem gördü ama açık değil!"
+        "tr": "Birim işlem gördü ama açık değil!"
     },
 
     "pca9685_module_frequency_change": {
-        "tr": "Modül çalışma frekansı değiştirildi."
+        "tr": "Birim çalışma frekansı değiştirildi."
     },
     "pca9685_module_wrong_frequency_input": {
         "tr": "Frekans ayarı, 24 Hz ile 1526 Hz arasında olmalıdır!"
     },
 
     "pca9685_module_pulselength_change": {
-        "tr": "Modül sinyal darbe uzunluğu değiştirildi."
+        "tr": "Birim sinyal darbe uzunluğu değiştirildi."
     },
     "pca96585_module_pulserange_error": {
         "tr": "Minimum ve maksimum darbe uzunlukları dışarısında bir darbe uzunluğu ayarı girildi!"
@@ -47,7 +47,7 @@
     },
 
     "pca9685_module_anglerange_change": {
-        "tr": "Modül sinyal açısı aralığı değiştirildi."
+        "tr": "Birim sinyal açısı aralığı değiştirildi."
     },
 
     "pca9685_module_servochannel_error": {

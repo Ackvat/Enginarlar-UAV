@@ -35,7 +35,7 @@ class E22LoRa(UARTBase):
 
 
 
-    # Modülü açma ve hazırlama fonksiyonu
+    # Birimi açma ve hazırlama işlevi
     def OpenModule(self):
         self.Log("e22lora_module_opening", logging.INFO)
         if self.ser.is_open == False:
@@ -46,7 +46,7 @@ class E22LoRa(UARTBase):
         else:
             self.Log("e22lora_module_open_error", logging.ERROR)
         
-    # Modülü kapatma fonksiyonu
+    # Birimi kapatma işlevi
     def CloseModule(self):
         self.Log("e22lora_module_closing", logging.INFO)
         if self.open:
@@ -63,7 +63,7 @@ class E22LoRa(UARTBase):
     
         
     
-    # Paralel mesaj okuma fonksiyonu
+    # Koşut bildiri okuma işlevi
     def _ReadMessage(self):
         try:
             while self. reading and self.open:
@@ -78,12 +78,12 @@ class E22LoRa(UARTBase):
             self.Log(f"e22lora_read_error", logging.ERROR)
             self.Log(f"{e}", logging.ERROR)
                 
-    # Paket mesaj yollama fonksiyonu
+    # Paket bildiri yollama işlevi
     def SendMessage(self, message):
         if self.open:
-            self.WriteToSerial(message)
+            self.Write(message)
 
-    # Mesaj okuma döngüsü için paralel iş parçacığı başlatma fonksiyonu
+    # Bildiri okuma döngüsü için koşut iş parçacığı başlatma işlevi
     def StartReading(self):
         if not self. reading:
             self. reading = True
@@ -91,15 +91,15 @@ class E22LoRa(UARTBase):
             self.readThread.start()
             self.Log("e22lora_reading_started", logging.INFO)
         else:
-            self.Log("e22lora_reading_already_ reading", logging.WARNING)
+            self.Log("e22lora_reading_already_reading", logging.WARNING)
 
-    # Mesajı tampondan alma fonksiyonu
+    # Bildiriı tampondan alma işlevi
     def GetMessage(self):
         if not self.queue.empty():
-            # Burada alına mesajı loglama yapmadan almalıyız
-            # çünkü bu fonksiyon sürekli döngüde çalışacak
+            # Burada alına bildiryi loglama yapmadan almalıyız
+            # çünkü bu işlev sürekli döngüde çalışacak
             # ve loglama çok fazla veri üretebilir.
-            # Eğer loglama yapılması isteniyorsa, bu fonksiyon
+            # Eğer loglama yapılması isteniyorsa, bu işlev
             # ayar olarak loglama isteği alabilir.
             message = self.queue.get()
             if self.debugMessage:
@@ -161,7 +161,7 @@ class R12DS(UARTBase):
 
         channels = [0] * 16
 
-        # Bit paketini işle.
+        # Bilgi paketini işle.
         channels[0]  = (data[1]     | data[2]  << 8) & 0x07FF
         channels[1]  = (data[2]  >> 3 | data[3]  << 5) & 0x07FF
         channels[2]  = (data[3]  >> 6 | data[4]  << 2 | data[5] << 10) & 0x07FF
